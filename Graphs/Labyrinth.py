@@ -1,59 +1,40 @@
-import sys
 from collections import deque
-
-input = sys.stdin.readline
-
 n, m = map(int, input().split())
 grid = [list(input().strip()) for _ in range(n)]
-
-dirs = [(0,1), (1,0), (0,-1), (-1,0)]
-dirc = ['R','D','L','U']
-
+dirs = [(0,1,'R'), (1,0,'D'), (0,-1,'L'), (-1,0,'U')]
 visited = [[False]*m for _ in range(n)]
-parent = [[(-1,-1)]*m for _ in range(n)]
-move = [['']*m for _ in range(n)]
-
+parent = [[None]*m for _ in range(n)]
 for i in range(n):
     for j in range(m):
         if grid[i][j] == 'A':
-            sx, sy = i, j
-
-q = deque()
-q.append((sx, sy))
-visited[sx][sy] = True
-
+            start = (i, j)
+queue = deque()
+queue.append(start)     
+visited[start[0]][start[1]] = True
 found = False
-
-while q:
-    x, y = q.popleft()
-    
+while queue:
+    x, y = queue.popleft()
     if grid[x][y] == 'B':
-        ex, ey = x, y
+        end = (x, y)
         found = True
         break
-    
-    for k in range(4):
-        nx, ny = x + dirs[k][0], y + dirs[k][1]
-        
+    for dx, dy, d in dirs:
+        nx, ny = x + dx, y + dy
         if 0 <= nx < n and 0 <= ny < m:
             if not visited[nx][ny] and grid[nx][ny] != '#':
                 visited[nx][ny] = True
-                parent[nx][ny] = (x, y)
-                move[nx][ny] = dirc[k]
-                q.append((nx, ny))
-
+                parent[nx][ny] = (x, y, d)
+                queue.append((nx, ny))
 if not found:
     print("NO")
 else:
     path = []
-    x, y = ex, ey
-    
-    while (x, y) != (sx, sy):
-        path.append(move[x][y])
-        x, y = parent[x][y]
-    
+    cur = end
+    while cur != start:
+        px, py, d = parent[cur[0]][cur[1]]
+        path.append(d)
+        cur = (px, py)
     path.reverse()
-    
     print("YES")
     print(len(path))
     print("".join(path))
