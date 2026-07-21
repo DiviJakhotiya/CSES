@@ -1,5 +1,5 @@
 # n , k = map(int , input().split())
-# F = list(map(int , input().split()))
+# F = list(map(int , input().split())) 
 # G = list(map(int , input().split()))
 # dp = [0] * (k+1)
 # dp[0] = 0
@@ -10,6 +10,9 @@
 #TLE CODE
 #I did think of iterating over sun(G) but contraint of sum under xyz not mentioned in the question leading me 
 #to change the approach to what it was above ^
+
+#edit
+#Also Would like to add that the solution is not very intuitive 
 n , k = map(int , input().split())
 F = list(map(int , input().split()))
 G = list(map(int , input().split()))
@@ -25,3 +28,4 @@ for v in range(max_val + 1):
     if dp[v] <= k:
         ans = v
 print(ans)
+print(*ans)
