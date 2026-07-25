@@ -3,8 +3,10 @@
 # BBBBC
 # BCAAA
 # AAAAA
-# AAAAA
-
+# # AAAAA
+# Funnily enought the helper function required for this
+# was very similar to the google programming question 
+# maximal subsquares, so just used that helper function initially
 n, k = map(int, input().split())
 grid = [list(input().strip()) for _ in range(n)]
 
